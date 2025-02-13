@@ -1,9 +1,14 @@
 .form-container {
   display: flex;
   justify-content: center;
-  height: 200px; /* Adjust the height as needed */
-  width: 100%;
+  height: 150px; /* Adjust the height as needed */
+  width: 400px;
   margin: auto;
+  margin-bottom: 20px; /* Add margin to separate the form from the tasks list */
+  position: absolute;
+  cursor: move;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .form-row {
@@ -29,9 +34,34 @@
   width: 200px;
   height: 50px;
   justify-content: center;
-  margin:5px;
+  margin: 5px;
+  color: white;
 }
 
 body {
-  min-height: 0px;
+  min-height: 535px;
+  min-width: 700px;
+}
+
+.tasks-list {
+  background-color: rgb(48, 48, 48);
+  position: absolute;
+  cursor: move;
+}
+
+.tasks-header {
+  color: white;
+}
+
+.task-form {
+  color: white;
+}
+
+.theme-switch {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  color: white;
 }
