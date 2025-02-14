@@ -1,10 +1,22 @@
 {
   "formOffset": [
-    104,
-    29
+    0,
+    0
   ],
   "tasksListOffset": [
-    640,
-    57
+    0,
+    0
+  ],
+  "tasksListOffset1": [
+    94,
+    113
+  ],
+  "tasksListOffset2": [
+    333,
+    39
+  ],
+  "tasksListOffset3": [
+    552,
+    111
   ]
 }
