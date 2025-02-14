@@ -33,7 +33,7 @@ const darkTheme = createTheme({
 });
 
 export const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>(lightTheme);
+  const [theme, setTheme] = useState<Theme>(darkTheme);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme.palette.mode === 'light' ? darkTheme : lightTheme));

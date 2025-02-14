@@ -14,7 +14,7 @@ interface Task {
 
 app.on('ready', () => {
   const win = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
     webPreferences: {
       preload: getPreloadPath(),
@@ -50,6 +50,8 @@ app.on('ready', () => {
   })
 
   ipcMain.handle('insert-task', (event, newTask) => {
+    event.preventDefault();
+    
     const dbPath = isDev() ? "src/electron/db/tasks.json" : "db/tasks.json";
     const fullPath = path.join(app.getAppPath(), dbPath);
   
@@ -102,4 +104,42 @@ app.on('ready', () => {
       return false;
     }
   })
+
+  ipcMain.handle('remember-components-offset', (event, offsets) => {
+    event.preventDefault();
+
+    const dbPath = isDev() ? "src/electron/db/offset.json" : "db/offset.json";
+    const fullPath = path.join(app.getAppPath(), dbPath);
+  
+    let existingOffsets = { formOffset: [0, 0], tasksListOffset: [0, 0] };
+  
+    if (fs.existsSync(fullPath)) {
+      const data = fs.readFileSync(fullPath, 'utf-8').trim();
+      if (data.length !== 0) {
+        existingOffsets = JSON.parse(data);
+      }
+    } else {
+      fs.mkdirSync(path.dirname(fullPath), { recursive: true });
+    }
+  
+    const updatedOffsets = { ...existingOffsets, ...offsets };
+    fs.writeFileSync(fullPath, JSON.stringify(updatedOffsets, null, 2), 'utf-8');
+    return updatedOffsets;
+  });
+  
+  ipcMain.handle('get-components-offset', () => {
+    const dbPath = isDev() ? "src/electron/db/offset.json" : "db/offset.json";
+    const fullPath = path.join(app.getAppPath(), dbPath);
+  
+    if (fs.existsSync(fullPath)) {
+      const data = fs.readFileSync(fullPath, 'utf-8').trim();
+      if (data.length !== 0) {
+        return JSON.parse(data);
+      } else {
+        return { formOffset: [0, 0], tasksListOffset: [0, 0] };
+      }
+    } else {
+      return { formOffset: [0, 0], tasksListOffset: [0, 0] };
+    }
+  });
 })

@@ -50,16 +50,12 @@ function App() {
     displayTask(); // Refresh the task list
   }
 
-  useEffect(() => {
-    displayTask();
-  }, []);
-
   const startEditingTask = (task: Task) => {
     setEditingTask(task.id);
     setEditedTask(task);
   };
 
-  const makeMovable = (ref: React.RefObject<HTMLDivElement>) => {
+  const makeMovable = (ref: React.RefObject<HTMLDivElement>, offsetKey: string) => {
     if (ref.current) {
       let isMouseDown = false;
       let offsetX = 0;
@@ -69,6 +65,11 @@ function App() {
         if (isMouseDown) {
           ref.current!.style.left = `${e.clientX - offsetX}px`;
           ref.current!.style.top = `${e.clientY - offsetY}px`;
+
+          // Store the offset
+          window.electron.invoke('remember-components-offset', {
+            [offsetKey]: [ref.current!.offsetLeft, ref.current!.offsetTop]
+          });
         }
       };
 
@@ -90,15 +91,30 @@ function App() {
   };
 
   useEffect(() => {
-    makeMovable(formRef);
-    makeMovable(tasksListRef);
+    async function initializeOffsets() {
+      const offsets = await window.electron.invoke('get-components-offset');
+      if (formRef.current) {
+        formRef.current.style.left = `${offsets.formOffset[0]}px`;
+        formRef.current.style.top = `${offsets.formOffset[1]}px`;
+      }
+      if (tasksListRef.current) {
+        tasksListRef.current.style.left = `${offsets.tasksListOffset[0]}px`;
+        tasksListRef.current.style.top = `${offsets.tasksListOffset[1]}px`;
+      }
+    }
+
+    initializeOffsets();
+    makeMovable(formRef, 'formOffset');
+    makeMovable(tasksListRef, 'tasksListOffset');
+    displayTask();
   }, []);
 
   return (
     <>
       <CssBaseline />
-      <div className="form-container" ref={formRef}>
+      <div className="form-container" ref={formRef}>  
         <form onSubmit={insertTask} className="task-form">
+        <CardHeader title="Create a task" className="form-header" />
           <div className="form-row">
             <TextField
               type="text"

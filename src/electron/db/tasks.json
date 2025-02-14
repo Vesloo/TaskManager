@@ -1,32 +1,32 @@
 [
   {
     "id": 1,
-    "title": "hI",
-    "description": "HI",
-    "completed": true
+    "title": "Make dishes",
+    "description": "Today",
+    "completed": false
   },
   {
     "id": 2,
-    "title": "hIo",
-    "description": "ohoho",
+    "title": "Buy pokémon cards",
+    "description": "Not more than 40€",
     "completed": true
   },
   {
     "id": 3,
-    "title": "hI",
-    "description": "HI",
+    "title": "Code everyday",
+    "description": "Help with ai",
     "completed": false
   },
   {
     "id": 4,
-    "title": "this is a test",
-    "description": "HI",
-    "completed": false
+    "title": "Test app",
+    "description": "Looking for errors",
+    "completed": true
   },
   {
     "id": 5,
-    "title": "test",
-    "description": "teset",
-    "completed": true
+    "title": "Draw a manga",
+    "description": "Starts friday",
+    "completed": false
   }
 ]

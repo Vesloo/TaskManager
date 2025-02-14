@@ -51,10 +51,21 @@ body {
 
 .tasks-header {
   color: white;
+  background-color: rgb(48, 48, 48);
+}
+
+.form-header {
+  background-color: rgb(48, 48, 48);
+  margin-bottom: 5px;
 }
 
 .task-form {
   color: white;
+  background-color: #121212;
+}
+
+.task-form:active {
+  z-index: 1;
 }
 
 .theme-switch {
